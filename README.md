@@ -1,24 +1,24 @@
-# README
+# Pokedex
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+1. Copy `.env.example` to `.env` if you want to recreate the local environment file.
+2. Start the containers with `docker compose up --build`.
+3. Create the databases with `docker compose exec app bin/rails db:create`.
 
-* Ruby version
+## Environment variables
 
-* System dependencies
+The application reads database settings from `.env`.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+- `DB_NAME_DEVELOPMENT`
+- `DB_NAME_TEST`
+- `DB_NAME_PRODUCTION`
+- `DB_NAME_PRODUCTION_CACHE`
+- `DB_NAME_PRODUCTION_QUEUE`
+- `DB_NAME_PRODUCTION_CABLE`
+- `MYSQL_ROOT_PASSWORD`
+- `APP_DATABASE_PASSWORD`
