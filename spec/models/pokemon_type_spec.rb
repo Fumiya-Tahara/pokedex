@@ -26,7 +26,7 @@ RSpec.describe PokemonType, type: :model do
 
     context "同じpokemonに同じslotが重複している場合" do
       it "無効である" do
-        pokemon = Pokemon.create!(name: "フシギダネ", national_number: 1)
+        pokemon = Pokemon.create!(name: "フシギダネ", national_number: 1, height: 0.7, weight: 6.9)
         type1 = Type.create!(name: "くさ")
         type2 = Type.create!(name: "どく")
         described_class.create!(pokemon: pokemon, type: type1, slot: 1)
