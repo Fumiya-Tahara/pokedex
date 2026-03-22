@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development Principles
+
+@.claude/tdd.md
+
 ## Commands
 
 **Start development environment:**
