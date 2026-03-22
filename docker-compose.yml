@@ -1,6 +1,6 @@
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: docker/dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -9,13 +9,19 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
-    environment:
-      DATABASE_PASSWORD: password
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
   db:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./tmp/db:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10

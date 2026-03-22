@@ -12,21 +12,22 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  host: <%= ENV.fetch("DB_HOST") { "127.0.0.1" } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("DB_USERNAME") { "root" } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { "password" } %>
+  host: <%= ENV.fetch("DB_HOST") { "db" } %>
+  port: <%= ENV.fetch("DB_PORT") { 3306 } %>
 
 development:
   <<: *default
-  database: app_development
+  database: <%= ENV.fetch("DB_NAME_DEVELOPMENT") { "app_development" } %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: app_test
+  database: <%= ENV.fetch("DB_NAME_TEST") { "app_test" } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -57,18 +58,17 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: app_production
-    username: app
-    password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+    database: <%= ENV.fetch("DB_NAME_PRODUCTION") { "app_production" } %>
+    password: <%= ENV["APP_DATABASE_PASSWORD"] || ENV["DB_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: app_production_cache
+    database: <%= ENV.fetch("DB_NAME_PRODUCTION_CACHE") { "app_production_cache" } %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: app_production_queue
+    database: <%= ENV.fetch("DB_NAME_PRODUCTION_QUEUE") { "app_production_queue" } %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: app_production_cable
+    database: <%= ENV.fetch("DB_NAME_PRODUCTION_CABLE") { "app_production_cable" } %>
     migrations_paths: db/cable_migrate
