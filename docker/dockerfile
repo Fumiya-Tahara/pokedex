@@ -7,6 +7,9 @@ RUN apt-get update -qq && apt-get install -y \
     pkg-config
 
 WORKDIR /app
+
+ENV BUNDLE_WITHOUT=""
+
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
