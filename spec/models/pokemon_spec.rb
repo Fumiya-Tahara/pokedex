@@ -4,7 +4,7 @@ RSpec.describe Pokemon, type: :model do
   describe "バリデーション" do
     context "nameが空の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: nil, national_number: 1)
+        pokemon = build(:pokemon, name: nil)
         expect(pokemon).not_to be_valid
         expect(pokemon.errors[:name]).to include("can't be blank")
       end
@@ -12,7 +12,7 @@ RSpec.describe Pokemon, type: :model do
 
     context "national_numberが空の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: nil)
+        pokemon = build(:pokemon, national_number: nil)
         expect(pokemon).not_to be_valid
         expect(pokemon.errors[:national_number]).to include("can't be blank")
       end
@@ -20,8 +20,8 @@ RSpec.describe Pokemon, type: :model do
 
     context "national_numberが重複している場合" do
       it "無効である" do
-        described_class.create!(name: "フシギダネ", national_number: 1)
-        pokemon = described_class.new(name: "フシギソウ", national_number: 1)
+        create(:pokemon, national_number: 1)
+        pokemon = build(:pokemon, national_number: 1)
         expect(pokemon).not_to be_valid
         expect(pokemon.errors[:national_number]).to include("has already been taken")
       end
@@ -29,14 +29,14 @@ RSpec.describe Pokemon, type: :model do
 
     context "national_numberが0以下の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 0)
+        pokemon = build(:pokemon, national_number: 0)
         expect(pokemon).not_to be_valid
       end
     end
 
     context "heightが空の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 1, height: nil, weight: 6.9)
+        pokemon = build(:pokemon, height: nil)
         expect(pokemon).not_to be_valid
         expect(pokemon.errors[:height]).to include("can't be blank")
       end
@@ -44,14 +44,14 @@ RSpec.describe Pokemon, type: :model do
 
     context "heightが0以下の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 1, height: 0, weight: 6.9)
+        pokemon = build(:pokemon, height: 0)
         expect(pokemon).not_to be_valid
       end
     end
 
     context "weightが空の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 1, height: 0.7, weight: nil)
+        pokemon = build(:pokemon, weight: nil)
         expect(pokemon).not_to be_valid
         expect(pokemon.errors[:weight]).to include("can't be blank")
       end
@@ -59,14 +59,14 @@ RSpec.describe Pokemon, type: :model do
 
     context "weightが0以下の場合" do
       it "無効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 1, height: 0.7, weight: 0)
+        pokemon = build(:pokemon, weight: 0)
         expect(pokemon).not_to be_valid
       end
     end
 
     context "全カラムが正しい場合" do
       it "有効である" do
-        pokemon = described_class.new(name: "フシギダネ", national_number: 1, height: 0.7, weight: 6.9)
+        pokemon = build(:pokemon)
         expect(pokemon).to be_valid
       end
     end

@@ -4,7 +4,7 @@ RSpec.describe Type, type: :model do
   describe "バリデーション" do
     context "nameが空の場合" do
       it "無効である" do
-        type = described_class.new(name: nil)
+        type = build(:type, name: nil)
         expect(type).not_to be_valid
         expect(type.errors[:name]).to include("can't be blank")
       end
@@ -12,8 +12,8 @@ RSpec.describe Type, type: :model do
 
     context "nameが重複している場合" do
       it "無効である" do
-        described_class.create!(name: "ほのお")
-        type = described_class.new(name: "ほのお")
+        create(:type, name: "ほのお")
+        type = build(:type, name: "ほのお")
         expect(type).not_to be_valid
         expect(type.errors[:name]).to include("has already been taken")
       end
@@ -21,7 +21,7 @@ RSpec.describe Type, type: :model do
 
     context "nameが正しい場合" do
       it "有効である" do
-        type = described_class.new(name: "ほのお")
+        type = build(:type)
         expect(type).to be_valid
       end
     end
