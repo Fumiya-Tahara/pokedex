@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Collaboration Policy
+
+AIへの委譲: ボイラープレートの実装（CRUD、テンプレート、設定ファイルなど）は積極的に実装して提案する。
+
+ユーザーが自分で判断・実装したいこと:
+- 設計の意思決定
+- データモデルの設計
+- パフォーマンス周りの実装
+
+これらに関わる作業は、実装せず選択肢を提示してユーザーの判断を仰ぐこと。
+
 ## Development Principles
 
 @.claude/tdd.md
